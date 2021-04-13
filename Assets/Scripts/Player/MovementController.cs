@@ -8,8 +8,10 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.00F;
     [SerializeField] private float smoothAmount = 0.80F;
     [SerializeField] [Range(0F, 1.0F)] private float crouchRatio = 0.50F;
+    [SerializeField] private float upForce = 7.50F;
 
     private GameEventListener moveEventListener;
+    private bool isGrounded;
 
     void Awake()
     {
@@ -36,6 +38,21 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter()
+    {
+        isGrounded = true;
+    }
+
+    void OnCollisionExit()
+    {
+        isGrounded = false;
+    }
+
+    void Update()
+    {
+        Debug.Log("isGrounded: " + isGrounded);
+    }
+
     private void HandleMoveEvent()
     {
         string input = EventManager.moveEvent.input;
@@ -45,6 +62,15 @@ public class MovementController : MonoBehaviour
 
         switch (input)
         {
+            case "UP":
+                // THIS SECTION IS NOT EFFICIENT AND NEEDS TO BE
+                // CLEANED UP LATER
+                if (isGrounded)
+                {
+                    GetComponent<Rigidbody>().AddForce(new Vector3(0, upForce, 0), ForceMode.Impulse);
+                }
+                return;
+
             case "RIGHT":
                 destination += new Vector3(moveSpeed, 0, 0) * ((isCrouching) ? crouchRatio : 1.0F);
                 break;

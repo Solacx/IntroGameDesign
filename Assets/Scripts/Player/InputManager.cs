@@ -9,8 +9,29 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         processMovementInputs();
+        processCrouchInputs();
+    }
 
-        // Crouching is not considered as movement
+    private void processMovementInputs()
+    {
+        isCrouching = Input.GetKey(KeyCode.DownArrow);
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            EventManager.createMoveEvent("UP", isCrouching);
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            EventManager.createMoveEvent("RIGHT", isCrouching);
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            EventManager.createMoveEvent("LEFT", isCrouching);
+        }
+    }
+
+    private void processCrouchInputs()
+    {
         if (Input.GetKey(KeyCode.DownArrow))
         {
             EventManager.createAnimationEvent("CROUCH");
@@ -18,20 +39,6 @@ public class InputManager : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             EventManager.createAnimationEvent("STAND");
-        }
-    }
-
-    private void processMovementInputs()
-    {
-        isCrouching = Input.GetKey(KeyCode.DownArrow);
-
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            EventManager.createMoveEvent("RIGHT", isCrouching);
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            EventManager.createMoveEvent("LEFT", isCrouching);
         }
     }
 }
