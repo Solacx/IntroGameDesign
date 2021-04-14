@@ -10,6 +10,11 @@ public class InputManager : MonoBehaviour
     {
         processMovementInputs();
         processCrouchInputs();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GameObject.Find("Player").transform.position = new Vector3(0, 2, 0);
+        }
     }
 
     private void processMovementInputs()
