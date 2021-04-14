@@ -5,10 +5,11 @@ using UnityEngine;
 public class MovementController : MonoBehaviour
 {
     [SerializeField] private SimpleMovement movementController;
-    [SerializeField] private float moveSpeed = 5.00F;
-    [SerializeField] private float smoothAmount = 0.80F;
+    [SerializeField] public float moveSpeed = 5.00F;
+    [SerializeField] public float smoothAmount = 0.80F;
     [SerializeField] [Range(0F, 1.0F)] private float crouchRatio = 0.50F;
-    [SerializeField] private float upForce = 7.50F;
+    [SerializeField] public float upForce = 7.50F;
+    [SerializeField] public float downForce = 1.50F;
     [SerializeField] private UnityEngine.UI.Text temp;
 
     private GameEventListener moveEventListener;
@@ -34,7 +35,7 @@ public class MovementController : MonoBehaviour
 
         if (temp.velocity.y < 0)
         {
-            temp.velocity += Vector3.up * Physics.gravity.y * (1.50F) * Time.deltaTime;
+            temp.velocity += Vector3.up * Physics.gravity.y * downForce * Time.deltaTime;
         }
     }
 
