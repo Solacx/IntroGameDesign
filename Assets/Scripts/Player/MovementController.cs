@@ -26,6 +26,17 @@ public class MovementController : MonoBehaviour
         moveEvent.AddListener(moveEventListener);
     }
 
+    void Update()
+    {
+        // CLEAN UP THIS SECTION LATER
+        Rigidbody temp = GetComponent<Rigidbody>();
+
+        if (temp.velocity.y < 0)
+        {
+            temp.velocity += Vector3.up * Physics.gravity.y * (1.50F) * Time.deltaTime;
+        }
+    }
+
     void LateUpdate()
     {
         Vector3 currentPosition = transform.position;
@@ -46,11 +57,6 @@ public class MovementController : MonoBehaviour
     void OnCollisionExit()
     {
         isGrounded = false;
-    }
-
-    void Update()
-    {
-        Debug.Log("isGrounded: " + isGrounded);
     }
 
     private void HandleMoveEvent()
