@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Camera\FollowObject.cs" />
      <Compile Include="Assets\Scripts\Event\AnimationEvent.cs" />
      <Compile Include="Assets\Scripts\Event\EventManager.cs" />
      <Compile Include="Assets\Scripts\Event\GameEvent.cs" />
