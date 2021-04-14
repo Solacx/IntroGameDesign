@@ -13,7 +13,7 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GameObject.Find("Player").transform.position = new Vector3(0, 2, 0);
+            GameObject.Find("Player").transform.position = new Vector3(-5, 2, 0);
         }
     }
 

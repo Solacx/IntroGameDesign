@@ -9,6 +9,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float smoothAmount = 0.80F;
     [SerializeField] [Range(0F, 1.0F)] private float crouchRatio = 0.50F;
     [SerializeField] private float upForce = 7.50F;
+    [SerializeField] private UnityEngine.UI.Text temp;
 
     private GameEventListener moveEventListener;
     private bool isGrounded;
@@ -49,7 +50,20 @@ public class MovementController : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter()
+    void OnCollisionEnter(Collision collision)
+    {
+        isGrounded = true;
+
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Temp"))
+        {
+            int score = int.Parse(temp.text);
+            score++;
+            temp.text = score.ToString();
+            transform.position = new Vector3(-5, 2, 0);
+        }
+    }
+
+    void OnCollisionStay()
     {
         isGrounded = true;
     }
