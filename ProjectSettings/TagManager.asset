@@ -13,8 +13,6 @@ TagManager:
   - UI
   - 
   - 
-  - Player
-  - Floors
   - 
   - 
   - 
@@ -36,7 +34,9 @@ TagManager:
   - 
   - 
   - 
-  - Temp
+  - 
+  - 
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
