@@ -36,18 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\OLD Scripts\Camera\FollowObject.cs" />
-     <Compile Include="Assets\OLD Scripts\Event\AnimationEvent.cs" />
-     <Compile Include="Assets\OLD Scripts\Event\EventManager.cs" />
-     <Compile Include="Assets\OLD Scripts\Event\GameEvent.cs" />
-     <Compile Include="Assets\OLD Scripts\Event\GameEventListener.cs" />
-     <Compile Include="Assets\OLD Scripts\Event\MoveEvent.cs" />
-     <Compile Include="Assets\OLD Scripts\Player\AnimationController.cs" />
-     <Compile Include="Assets\OLD Scripts\Player\InputManager.cs" />
-     <Compile Include="Assets\OLD Scripts\Player\MovementController.cs" />
-     <Compile Include="Assets\OLD Scripts\Player\State.cs" />
-     <Compile Include="Assets\OLD Scripts\SimpleMovement.cs" />
-     <Compile Include="Assets\OLD Scripts\Temp.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\MenuController.cs" />
      <Compile Include="Assets\Scripts\Movement2D.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />

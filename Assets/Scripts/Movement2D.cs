@@ -11,11 +11,10 @@ using UnityEngine;
 public class Movement2D : RaycastController
 {
     public CollisionData collisions;
+    public Vector2 userInput;
 
     [SerializeField] private float maxSlopeAngle = 40;
     
-    private Vector2 userInput;
-
     public override void Start() {
         base.Start();
 
@@ -68,7 +67,7 @@ public class Movement2D : RaycastController
             castOrigin += Vector2.up * spacingX * i;
             RaycastHit2D collision = Physics2D.Raycast(castOrigin, Vector2.right * moveDirection, castRange, collisionMask);
 
-            // Debug.DrawRay(castOrigin, Vector2.right * moveDirection, Color.red);
+            Debug.DrawRay(castOrigin, Vector2.right * moveDirection, Color.red);
 
             if (collision) {
                 float slopeAngle = Vector2.Angle(collision.normal, Vector2.up);
@@ -123,7 +122,7 @@ public class Movement2D : RaycastController
             castOrigin += Vector2.right * (spacingY * i + moveAmount.x);
             RaycastHit2D collision = Physics2D.Raycast(castOrigin, Vector2.up * moveDirectionY, castRangeY, collisionMask);
 
-            // Debug.DrawRay(castOrigin, Vector2.up * moveDirectionY, Color.red);
+            Debug.DrawRay(castOrigin, Vector2.up * moveDirectionY, Color.red);
 
             if (collision) {
                 // NB: Source code has code here to create elements
