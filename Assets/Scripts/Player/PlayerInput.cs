@@ -4,8 +4,7 @@ using UnityEngine;
 
 
 /**
- * Based on video guide. Adapted to consider Z-axis since project is
- * created in 3D.
+ * Based on video guide.
  * 
  * Source: https://github.com/SebLague/2DPlatformer-Tutorial
  */
@@ -18,7 +17,7 @@ public class PlayerInput : MonoBehaviour
     }
 
     void Update() {
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         player.SetUserInput(input);
 
         if (Input.GetKeyDown(KeyCode.Space)) {

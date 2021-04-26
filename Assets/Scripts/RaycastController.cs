@@ -4,8 +4,7 @@ using UnityEngine;
 
 
 /**
- * Based on video guide. Adapted to consider Z-axis since project is
- * created in 3D.
+ * Based on video guide.
  * 
  * Source: https://github.com/SebLague/2DPlatformer-Tutorial
  */
@@ -21,11 +20,11 @@ public class RaycastController : MonoBehaviour
     [HideInInspector] public float spacingX;
     [HideInInspector] public float spacingY;
 
-    [HideInInspector] public new BoxCollider collider;
+    [HideInInspector] public new BoxCollider2D collider;
     [HideInInspector] public CastOrigins castOrigins;
 
     public virtual void Awake() {
-        collider = GetComponent<BoxCollider>();
+        collider = GetComponent<BoxCollider2D>();
     }
 
     public virtual void Start() {
@@ -47,16 +46,16 @@ public class RaycastController : MonoBehaviour
         Bounds bounds = collider.bounds;
         bounds.Expand(skinLength * -2);
 
-        castOrigins.BL = new Vector3(bounds.min.x, bounds.min.y, bounds.min.z);
-        castOrigins.BR = new Vector3(bounds.max.x, bounds.min.y, bounds.min.z);
-        castOrigins.TL = new Vector3(bounds.min.x, bounds.max.y, bounds.min.z);
-        castOrigins.TR = new Vector3(bounds.max.x, bounds.max.y, bounds.min.z);
+        castOrigins.BL = new Vector2(bounds.min.x, bounds.min.y);
+        castOrigins.BR = new Vector2(bounds.max.x, bounds.min.y);
+        castOrigins.TL = new Vector2(bounds.min.x, bounds.max.y);
+        castOrigins.TR = new Vector2(bounds.max.x, bounds.max.y);
     }
 
     public struct CastOrigins {
-        public Vector3 TL;
-        public Vector3 TR;
-        public Vector3 BL;
-        public Vector3 BR;
+        public Vector2 TL;
+        public Vector2 TR;
+        public Vector2 BL;
+        public Vector2 BR;
     }
 }

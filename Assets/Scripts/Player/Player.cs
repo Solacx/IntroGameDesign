@@ -4,8 +4,7 @@ using UnityEngine;
 
 
 /**
- * Based on video guide. Adapted to consider Z-axis since project is
- * created in 3D.
+ * Based on video guide.
  * 
  * Source: https://github.com/SebLague/2DPlatformer-Tutorial
  */
@@ -21,13 +20,13 @@ public class Player : MonoBehaviour
     private float minJumpHeight = 1.00F;
     private float timeToJumpApex = 0.40F;
 
-    private Vector3 velocity;
+    private Vector2 velocity;
     private float smoothVelocity;
     private float maxJumpVelocity;
     private float minJumpVelocity;
     private float gravity;
 
-    private Vector3 userInput;
+    private Vector2 userInput;
 
     void Start() {
         controller = GetComponent<Movement2D>();
@@ -49,7 +48,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetUserInput(Vector3 input) {
+    public void SetUserInput(Vector2 input) {
         userInput = input;
     }
 
