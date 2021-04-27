@@ -38,6 +38,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scenes\Test\Controller.cs" />
      <Compile Include="Assets\Scenes\Test\FOV.cs" />
+     <Compile Include="Assets\Scenes\Test\FOV2.cs" />
+     <Compile Include="Assets\Scenes\Test\FOV2Editor.cs" />
      <Compile Include="Assets\Scenes\Test\FOVEditor.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\MenuController.cs" />
@@ -45,6 +47,8 @@
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerInput.cs" />
      <Compile Include="Assets\Scripts\RaycastController.cs" />
+     <None Include="Assets\Shaders\Stencil Object.shader" />
+     <None Include="Assets\Shaders\Stencil Mask.shader" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.20f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
