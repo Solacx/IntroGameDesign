@@ -11,9 +11,10 @@ using UnityEngine;
 public class Movement2D : RaycastController
 {
     public CollisionData collisions;
-    public Vector2 userInput;
 
-    [SerializeField] private float maxSlopeAngle = 40;
+    [HideInInspector] public Vector2 userInput;
+
+    [SerializeField] private float maxSlopeAngle = 45;
     
     public override void Start() {
         base.Start();
@@ -137,6 +138,11 @@ public class Movement2D : RaycastController
                 collisions.isAbove = (moveDirectionY == 1);
                 collisions.isBelow = (moveDirectionY == -1);
                 castRangeY = collision.distance;
+
+                // Spikes
+                if (collision.transform.gameObject.layer == LayerMask.NameToLayer("Hazards")) {
+                    collisions.isHazard = true;
+                }
             }
         }
 
@@ -257,6 +263,8 @@ public class Movement2D : RaycastController
         public int moveDirection;
         public bool isFallingThroughPlatform;
 
+        public bool isHazard;
+
         public void Reset() {
             isAbove = false;
             isBelow = false;
@@ -266,6 +274,8 @@ public class Movement2D : RaycastController
             isClimbing = false;
             isDescending = false;
             isSliding = false;
+
+            isHazard = false;
 
             slopeNormal = Vector2.zero;
             

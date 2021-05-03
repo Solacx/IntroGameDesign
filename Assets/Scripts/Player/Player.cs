@@ -40,12 +40,23 @@ public class Player : MonoBehaviour
         controller.Move(velocity * Time.deltaTime, userInput);
 
         if (controller.collisions.isAbove || controller.collisions.isBelow) {
+            // Spikes
+            if (controller.collisions.isHazard) {
+                OnDeath();
+            }
+
+            // Slope
             if (controller.collisions.isSliding) {
                 velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
             } else {
                 velocity.y = 0;
             }
         }
+    }
+
+    public void OnDeath() {
+        // For now leave it as reset position
+        transform.position = Vector3.zero;
     }
 
     public void SetUserInput(Vector2 input) {
