@@ -10,7 +10,7 @@ public class FOV : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    public float meshResolution;  // Can go bonkers if over 1
+    // public float meshResolution;  // Can go bonkers if over 1
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
@@ -21,11 +21,89 @@ public class FOV : MonoBehaviour
 
     public Controller temp;
 
+    public float meshResolution;        // Some reason values above 1 are bonkers
+
     void Start() {
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
     }
+
+    // void Update() {
+    //     DrawFOV();
+    // }
+
+    // private void DrawFOV() {
+    //     int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
+    //     float stepAngleSize = viewAngle / stepCount;
+
+    //     List<Vector3> viewPoints = new List<Vector3>();
+
+    //     for (int i = 0; i <= stepCount; i++) {
+    //         // There is a small issue here where one more line is drawn
+    //         // on left or right side based on mouse position, but not
+    //         // really a big problem
+
+    //         float angle = transform.eulerAngles.z - viewAngle/2 + stepAngleSize * i;
+    //         Debug.DrawLine(transform.position, transform.position + DirFromAngle(angle, true) * viewRadius, Color.red);
+
+    //         ViewCastData newViewCast = ViewCast(angle);
+    //         viewPoints.Add(newViewCast.point);
+    //     }
+
+    //     // TEMP
+    //     // for (int i = 0; i < viewPoints.Count; i++ ) {
+    //     //     Vector3 temp = new Vector3(viewPoints[i].x, -viewPoints[i].y, viewPoints[i].z);
+    //     //     viewPoints[i] = temp;
+    //     // }
+
+    //     int vertexCount = viewPoints.Count + 1;
+    //     Vector3[] vertices = new Vector3[vertexCount];
+    //     int[] triangles = new int[(vertexCount - 2) * 3];
+
+    //     vertices[0] = Vector3.zero;
+    //     for (int i = 0; i < vertexCount - 1; i++) {
+    //         vertices[i + 1] = viewPoints[i];
+
+    //         if (i < vertexCount - 2) {
+    //             triangles[i * 3] = 0;
+    //             triangles[i * 3 + 1] = i + 1;
+    //             triangles[i * 3 + 2] = i + 2;
+    //         }
+    //     }
+
+    //     viewMesh.Clear();
+    //     viewMesh.vertices = vertices;
+    //     viewMesh.triangles = triangles;
+    //     viewMesh.RecalculateNormals();
+    // }
+
+    // ViewCastData ViewCast(float globalAngle) {
+    //     Vector3 dir = DirFromAngle(globalAngle, true);
+    //     RaycastHit hit;
+
+    //     Debug.DrawRay(transform.position, dir * viewRadius, Color.green);
+
+    //     if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask)) {
+    //         return new ViewCastData(true, hit.point, hit.distance, globalAngle);
+    //     } else {
+    //         return new ViewCastData(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
+    //     }
+    // }
+
+    // public struct ViewCastData {
+    //     public bool isHit;
+    //     public Vector3 point;
+    //     public float distance;
+    //     public float angle;
+
+    //     public ViewCastData(bool isHit, Vector3 point, float distance, float angle) {
+    //         this.isHit = isHit;
+    //         this.point = point;
+    //         this.distance = distance;
+    //         this.angle = angle;
+    //     }
+    // }
 
     void DrawFieldOfView() {
         int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
@@ -108,6 +186,9 @@ public class FOV : MonoBehaviour
         // the visualisation. The actual hitboxes still line up
         // proper.
 
+        // Distances are messed up (huge)
+        // Direction is fine, seems to be detecting collisions fine
+
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
@@ -116,7 +197,8 @@ public class FOV : MonoBehaviour
         // Debug.Log(dir);
 
         // Debug.Log(transform.position);
-        Debug.DrawLine(transform.position, dir * viewRadius, Color.green);
+        // Debug.DrawRay(transform.position, dir * viewRadius, Color.green);
+        // Debug.DrawLine(transform.position, dir * viewRadius, Color.green);
 
         if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask)) {
             GameObject temp = hit.collider.gameObject;

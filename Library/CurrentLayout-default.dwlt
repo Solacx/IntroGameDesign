@@ -100,7 +100,7 @@ MonoBehaviour:
   m_MinSize: {x: 231, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 56
+  controlID: 36
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -146,8 +146,8 @@ MonoBehaviour:
     y: 692
     width: 1155
     height: 265
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 563}
   m_MaxSize: {x: 4002, y: 12063}
   vertical: 1
-  controlID: 97
+  controlID: 124
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_MinSize: {x: 709, y: 563}
   m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 181
+  controlID: 161
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -363,11 +363,11 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Scenes/Test
   m_ViewMode: 1
   m_StartGridSize: 62
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scenes/Test
   m_LastFoldersGridSize: 62
   m_LastProjectPath: C:\Users\Jun\OneDrive - UTS\2021\Autumn\31262 Introduction to
     Computer Game Design\Assignment 4\IntroGameDesign
@@ -375,9 +375,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 2e350000
-    m_LastClickedID: 13614
-    m_ExpandedIDs: 0000000020350000223500002c3500002e35000000ca9a3b
+    m_SelectedIDs: dc340000
+    m_LastClickedID: 13532
+    m_ExpandedIDs: 00000000b4340000b6340000be34000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -405,7 +405,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000002035000022350000
+    m_ExpandedIDs: 00000000b4340000b6340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -528,23 +528,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 1865feff4066feff5473feff6a79feffecdafeff44dcfeffd4e9feff18ecfeff4ef3feff20f4feff88cdffff2cd4ffff70f8ffff60faffff2a6a0000bc6a0000d66a0000b06c0000c26c00003c6d0000ca6d0000e46d00007e730000987300005c8700006e870000ea890000048a0000708b0000fc8b0000268c0000408c0000
+      m_SelectedIDs: fa330000
+      m_LastClickedID: 13306
+      m_ExpandedIDs: 5aa7ffff8cb6ffff90e0ffff54fbffff20340000243400003a340000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Front View Visualised
+        m_OriginalName: Front View Visualised
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 13336
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 5}
       m_SearchString: 
@@ -590,9 +590,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0, y: -3.9899998, z: 0}
+    m_Target: {x: 0.0019999743, y: 0, z: 0}
     speed: 2
-    m_Value: {x: 0, y: -3.9899998, z: 0}
+    m_Value: {x: 0.0019999743, y: 0, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -640,11 +640,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0, y: 0.0000013107747, z: 0, w: 1}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 0.8660253
+    m_Target: 5.1878743
     speed: 2
-    m_Value: 0.8660253
+    m_Value: 5.1878743
   m_Ortho:
     m_Target: 1
     speed: 2
