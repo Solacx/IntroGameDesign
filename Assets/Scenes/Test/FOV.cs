@@ -17,6 +17,10 @@ public class FOV : MonoBehaviour
     public int edgeResolveIterations;
     public float edgeDistanceThreshold;
 
+    public float maskCutawayDistance = 1.0F;
+
+    public Controller temp;
+
     void Start() {
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
@@ -31,7 +35,9 @@ public class FOV : MonoBehaviour
         CastData oldViewCast = new CastData();
 
         for (int i = 0; i <= stepCount; i++) {
-            float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
+            float angle = transform.eulerAngles.z - viewAngle / 2 + stepAngleSize * i;
+
+            Debug.DrawLine(transform.position, transform.position + DirFromAngle(angle, true) * viewRadius, Color.red);
 
             CastData newViewCast = ViewCast(angle);
 
@@ -59,7 +65,8 @@ public class FOV : MonoBehaviour
         // NB: Positions of vertices need to be in local space
         vertices[0] = Vector3.zero;
         for (int i = 0; i < vertexCount - 1; i++) {
-            vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+            vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]) + Vector3.right * maskCutawayDistance;
+            // Debug.Log(vertices[i + 1]);
 
             if (i < vertexCount - 2) {
                 triangles[i*3] = 0;
@@ -97,10 +104,26 @@ public class FOV : MonoBehaviour
     }
 
     CastData ViewCast(float globalAngle) {
+        // Good news is, even though this doesn't work it's just
+        // the visualisation. The actual hitboxes still line up
+        // proper.
+
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
+        // Viewcast is not aligned with viewcone
+        // Casts seem to be centered around world origin
+        // Debug.Log(dir);
+
+        // Debug.Log(transform.position);
+        Debug.DrawLine(transform.position, dir * viewRadius, Color.green);
+
         if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask)) {
+            GameObject temp = hit.collider.gameObject;
+            if (temp.GetComponent<AppearOnSight>() != null) {
+                temp.GetComponent<AppearOnSight>().setActiveColor(true);
+            }
+            
             return new CastData(true, hit.point, hit.distance, globalAngle);
         } else {
             return new CastData(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
@@ -133,12 +156,13 @@ public class FOV : MonoBehaviour
             // Debug.Log("Something in radius");
             Transform target = targetsInViewRadius[i].transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2) {
+            if (Vector3.Angle(transform.right, dirToTarget) < viewAngle / 2) {
+                // Debug.Log("In angle");
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
 
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask)) {
                     // No obstacles
-                    Debug.Log("Saw a target.");
+                    Debug.Log(gameObject.name + " saw a target.");
                 }
             }
         }
@@ -146,9 +170,27 @@ public class FOV : MonoBehaviour
 
     public Vector3 DirFromAngle(float angleInDegrees, bool isAngleGlobal) {
         if (!isAngleGlobal) {
-            angleInDegrees += transform.eulerAngles.y;
+            angleInDegrees += transform.eulerAngles.z;
+
+            // Issue is because eulerAngles is returning between
+            // 270-360 and 0-90 (bottom, top)
+            // Debug.Log(transform.eulerAngles.z);
         }
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
+
+        if (Input.mousePosition.x < Camera.main.WorldToScreenPoint(transform.position).x) {
+            // Debug.Log("LEFT");
+            if (Input.mousePosition.y < Camera.main.WorldToScreenPoint(transform.position).y) {
+                // Debug.Log("DOWN");
+                angleInDegrees = (90 - angleInDegrees) + 90;
+            } else {
+                // Debug.Log("UP");
+                angleInDegrees = (90 - angleInDegrees) + 90;
+            }
+        }
+        // Debug.Log(angleInDegrees);
+
+        // return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
+        return new Vector3(Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0);
     }
 
     public struct EdgeInfo {
