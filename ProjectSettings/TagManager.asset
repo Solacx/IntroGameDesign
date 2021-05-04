@@ -32,11 +32,11 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Boxes
+  - Interactable
+  - Hazards
   - Obstacles
-  - Targets
+  - Stage
   m_SortingLayers:
   - name: Default
     uniqueID: 0

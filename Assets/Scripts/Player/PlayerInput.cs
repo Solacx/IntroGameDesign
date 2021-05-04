@@ -27,5 +27,9 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space)) {
             player.OnJumpInputUp();
         }
+
+        if (Input.GetMouseButtonDown(0)) {
+            player.Interact();
+        }
     }
 }

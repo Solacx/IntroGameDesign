@@ -14,8 +14,7 @@ public class CameraFollow : MonoBehaviour
 
     private FocusArea cameraFocusArea;
     public Vector2 cameraFocusAreaSize;
-
-    //
+    
     public float verticalOffset;
 	public float lookAheadDstX;
 	public float lookSmoothTimeX;
@@ -28,7 +27,6 @@ public class CameraFollow : MonoBehaviour
 	float smoothVelocityY;
 
 	bool lookAheadStopped;
-    //
 
     void Start() {
         cameraFocusArea = new FocusArea(controller.collider.bounds, cameraFocusAreaSize);

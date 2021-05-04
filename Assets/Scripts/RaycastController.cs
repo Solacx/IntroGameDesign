@@ -11,6 +11,7 @@ using UnityEngine;
 public class RaycastController : MonoBehaviour
 {
     public LayerMask collisionMask;
+    public LayerMask interactionMask;
 
     public const float skinLength = 0.015F;
     public const float spaceBetweenRays = 0.25F;
