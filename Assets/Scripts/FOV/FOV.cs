@@ -202,8 +202,10 @@ public class FOV : MonoBehaviour
 
         if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask)) {
             GameObject temp = hit.collider.gameObject;
-            if (temp.GetComponent<AppearOnSight>() != null) {
+            if (temp.GetComponent<AppearOnSight>() != null) {   // THIS IS FROM THE TEST SCENE
                 temp.GetComponent<AppearOnSight>().setActiveColor(true);
+            } else if (temp.GetComponent<DisappearOnSight>() != null) {
+                temp.GetComponent<DisappearOnSight>().Disappear();
             }
             
             return new CastData(true, hit.point, hit.distance, globalAngle);

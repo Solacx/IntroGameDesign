@@ -56,7 +56,6 @@ public class Player : MonoBehaviour
 
     void LateUpdate() {
         UpdateFOV();
-        UpdateFOVVisualisation();
     }
 
     public void OnDeath() {
@@ -116,26 +115,27 @@ public class Player : MonoBehaviour
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
     }
 
+    /**
+     * NB: Since this is buggy current code is using personal cast from
+     *     local position to mouse position (global space). Keep this in
+     *     mind when refactoring.
+     */
     private void UpdateFOV() {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         
         // Fix direction since main camera is negative set.
         mousePos.z = 0;
 
-        Debug.DrawLine(transform.position, mousePos, Color.magenta);
+        // Debug.DrawLine(transform.position, mousePos, Color.magenta);
         
-        Vector3 mouseDirection = mousePos;
-        Vector3 mouseNormal = Vector3.Cross(mouseDirection, Vector3.back);
-        Vector3 lookDirection = Vector3.Cross(mouseDirection, mouseNormal);
+        // Vector3 mouseDirection = mousePos;
+        // Vector3 mouseNormal = Vector3.Cross(mouseDirection, Vector3.back);
+        // Vector3 lookDirection = Vector3.Cross(mouseDirection, mouseNormal);
 
-        Debug.DrawRay(transform.position, mouseDirection, Color.red);
-        Debug.DrawRay(transform.position, mouseNormal, Color.green);
-        Debug.DrawRay(transform.position, lookDirection, Color.blue);
+        // Debug.DrawRay(transform.position, mouseDirection, Color.red);
+        // Debug.DrawRay(transform.position, mouseNormal, Color.green);
+        // Debug.DrawRay(transform.position, lookDirection, Color.blue);
 
-        transform.LookAt(lookDirection);
-    }
-
-    private void UpdateFOVVisualisation() {
-        // No visualisation atm since buggy
+        // transform.LookAt(lookDirection.normalized * 100);
     }
 }
