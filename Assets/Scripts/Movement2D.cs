@@ -106,6 +106,17 @@ public class Movement2D : RaycastController
                     castRange = collision.distance;
                 }
             }
+
+            // Interactions
+            // Again, not the best way to do this, but time pressure sucks
+            RaycastHit2D temp = Physics2D.Raycast(castOrigin, Vector2.right * moveDirection, castRange, interactionMask);
+            if (temp) {
+                collisions.isInteractableNear = true;
+                collisions.interactableObject = temp.collider.gameObject;
+            } else {
+                collisions.isInteractableNear = false;
+                collisions.interactableObject = null;
+            }
         }
 
         return moveAmount;
@@ -265,6 +276,9 @@ public class Movement2D : RaycastController
 
         public bool isHazard;
 
+        public bool isInteractableNear;
+        public GameObject interactableObject;
+
         public void Reset() {
             isAbove = false;
             isBelow = false;
@@ -276,6 +290,8 @@ public class Movement2D : RaycastController
             isSliding = false;
 
             isHazard = false;
+
+            isInteractableNear = false;
 
             slopeNormal = Vector2.zero;
             

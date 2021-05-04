@@ -86,6 +86,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Interact() {
+        if (controller.collisions.isInteractableNear) {
+            // Should really handle better, Actions perhaps?
+            Door temp = controller.collisions.interactableObject.GetComponent<Door>();
+            temp.GoToNextStage();
+        }
+    }
+
     private void CalculateVelocity() {
         float targetVelocity = userInput.x * moveSpeed;
 

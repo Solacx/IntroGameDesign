@@ -44,6 +44,7 @@
      <Compile Include="Assets\Scenes\Test\FOVEditor.cs" />
      <Compile Include="Assets\Scenes\Test\Test.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
+     <Compile Include="Assets\Scripts\Door\Door.cs" />
      <Compile Include="Assets\Scripts\Goo\GooFollow.cs" />
      <Compile Include="Assets\Scripts\MenuController.cs" />
      <Compile Include="Assets\Scripts\Movement2D.cs" />
