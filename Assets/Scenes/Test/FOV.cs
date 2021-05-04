@@ -10,18 +10,100 @@ public class FOV : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    public float meshResolution;  // Can go bonkers if over 1
+    // public float meshResolution;  // Can go bonkers if over 1
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
     public int edgeResolveIterations;
     public float edgeDistanceThreshold;
 
+    public float maskCutawayDistance = 1.0F;
+
+    public Controller temp;
+
+    public float meshResolution;        // Some reason values above 1 are bonkers
+
     void Start() {
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
     }
+
+    // void Update() {
+    //     DrawFOV();
+    // }
+
+    // private void DrawFOV() {
+    //     int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
+    //     float stepAngleSize = viewAngle / stepCount;
+
+    //     List<Vector3> viewPoints = new List<Vector3>();
+
+    //     for (int i = 0; i <= stepCount; i++) {
+    //         // There is a small issue here where one more line is drawn
+    //         // on left or right side based on mouse position, but not
+    //         // really a big problem
+
+    //         float angle = transform.eulerAngles.z - viewAngle/2 + stepAngleSize * i;
+    //         Debug.DrawLine(transform.position, transform.position + DirFromAngle(angle, true) * viewRadius, Color.red);
+
+    //         ViewCastData newViewCast = ViewCast(angle);
+    //         viewPoints.Add(newViewCast.point);
+    //     }
+
+    //     // TEMP
+    //     // for (int i = 0; i < viewPoints.Count; i++ ) {
+    //     //     Vector3 temp = new Vector3(viewPoints[i].x, -viewPoints[i].y, viewPoints[i].z);
+    //     //     viewPoints[i] = temp;
+    //     // }
+
+    //     int vertexCount = viewPoints.Count + 1;
+    //     Vector3[] vertices = new Vector3[vertexCount];
+    //     int[] triangles = new int[(vertexCount - 2) * 3];
+
+    //     vertices[0] = Vector3.zero;
+    //     for (int i = 0; i < vertexCount - 1; i++) {
+    //         vertices[i + 1] = viewPoints[i];
+
+    //         if (i < vertexCount - 2) {
+    //             triangles[i * 3] = 0;
+    //             triangles[i * 3 + 1] = i + 1;
+    //             triangles[i * 3 + 2] = i + 2;
+    //         }
+    //     }
+
+    //     viewMesh.Clear();
+    //     viewMesh.vertices = vertices;
+    //     viewMesh.triangles = triangles;
+    //     viewMesh.RecalculateNormals();
+    // }
+
+    // ViewCastData ViewCast(float globalAngle) {
+    //     Vector3 dir = DirFromAngle(globalAngle, true);
+    //     RaycastHit hit;
+
+    //     Debug.DrawRay(transform.position, dir * viewRadius, Color.green);
+
+    //     if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask)) {
+    //         return new ViewCastData(true, hit.point, hit.distance, globalAngle);
+    //     } else {
+    //         return new ViewCastData(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
+    //     }
+    // }
+
+    // public struct ViewCastData {
+    //     public bool isHit;
+    //     public Vector3 point;
+    //     public float distance;
+    //     public float angle;
+
+    //     public ViewCastData(bool isHit, Vector3 point, float distance, float angle) {
+    //         this.isHit = isHit;
+    //         this.point = point;
+    //         this.distance = distance;
+    //         this.angle = angle;
+    //     }
+    // }
 
     void DrawFieldOfView() {
         int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
@@ -31,7 +113,9 @@ public class FOV : MonoBehaviour
         CastData oldViewCast = new CastData();
 
         for (int i = 0; i <= stepCount; i++) {
-            float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
+            float angle = transform.eulerAngles.z - viewAngle / 2 + stepAngleSize * i;
+
+            Debug.DrawLine(transform.position, transform.position + DirFromAngle(angle, true) * viewRadius, Color.red);
 
             CastData newViewCast = ViewCast(angle);
 
@@ -59,7 +143,8 @@ public class FOV : MonoBehaviour
         // NB: Positions of vertices need to be in local space
         vertices[0] = Vector3.zero;
         for (int i = 0; i < vertexCount - 1; i++) {
-            vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+            vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]) + Vector3.right * maskCutawayDistance;
+            // Debug.Log(vertices[i + 1]);
 
             if (i < vertexCount - 2) {
                 triangles[i*3] = 0;
@@ -97,10 +182,30 @@ public class FOV : MonoBehaviour
     }
 
     CastData ViewCast(float globalAngle) {
+        // Good news is, even though this doesn't work it's just
+        // the visualisation. The actual hitboxes still line up
+        // proper.
+
+        // Distances are messed up (huge)
+        // Direction is fine, seems to be detecting collisions fine
+
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
+        // Viewcast is not aligned with viewcone
+        // Casts seem to be centered around world origin
+        // Debug.Log(dir);
+
+        // Debug.Log(transform.position);
+        // Debug.DrawRay(transform.position, dir * viewRadius, Color.green);
+        // Debug.DrawLine(transform.position, dir * viewRadius, Color.green);
+
         if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask)) {
+            GameObject temp = hit.collider.gameObject;
+            if (temp.GetComponent<AppearOnSight>() != null) {
+                temp.GetComponent<AppearOnSight>().setActiveColor(true);
+            }
+            
             return new CastData(true, hit.point, hit.distance, globalAngle);
         } else {
             return new CastData(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
@@ -133,12 +238,13 @@ public class FOV : MonoBehaviour
             // Debug.Log("Something in radius");
             Transform target = targetsInViewRadius[i].transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2) {
+            if (Vector3.Angle(transform.right, dirToTarget) < viewAngle / 2) {
+                // Debug.Log("In angle");
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
 
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask)) {
                     // No obstacles
-                    Debug.Log("Saw a target.");
+                    Debug.Log(gameObject.name + " saw a target.");
                 }
             }
         }
@@ -146,9 +252,27 @@ public class FOV : MonoBehaviour
 
     public Vector3 DirFromAngle(float angleInDegrees, bool isAngleGlobal) {
         if (!isAngleGlobal) {
-            angleInDegrees += transform.eulerAngles.y;
+            angleInDegrees += transform.eulerAngles.z;
+
+            // Issue is because eulerAngles is returning between
+            // 270-360 and 0-90 (bottom, top)
+            // Debug.Log(transform.eulerAngles.z);
         }
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
+
+        if (Input.mousePosition.x < Camera.main.WorldToScreenPoint(transform.position).x) {
+            // Debug.Log("LEFT");
+            if (Input.mousePosition.y < Camera.main.WorldToScreenPoint(transform.position).y) {
+                // Debug.Log("DOWN");
+                angleInDegrees = (90 - angleInDegrees) + 90;
+            } else {
+                // Debug.Log("UP");
+                angleInDegrees = (90 - angleInDegrees) + 90;
+            }
+        }
+        // Debug.Log(angleInDegrees);
+
+        // return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
+        return new Vector3(Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0);
     }
 
     public struct EdgeInfo {

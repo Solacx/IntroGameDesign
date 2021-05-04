@@ -40,12 +40,23 @@ public class Player : MonoBehaviour
         controller.Move(velocity * Time.deltaTime, userInput);
 
         if (controller.collisions.isAbove || controller.collisions.isBelow) {
+            // Spikes
+            if (controller.collisions.isHazard) {
+                OnDeath();
+            }
+
+            // Slope
             if (controller.collisions.isSliding) {
                 velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
             } else {
                 velocity.y = 0;
             }
         }
+    }
+
+    public void OnDeath() {
+        // For now leave it as reset position
+        transform.position = Vector3.zero;
     }
 
     public void SetUserInput(Vector2 input) {
@@ -72,6 +83,14 @@ public class Player : MonoBehaviour
     public void OnJumpInputUp() {
         if (velocity.y > minJumpVelocity) {
             velocity.y = minJumpVelocity;
+        }
+    }
+
+    public void Interact() {
+        if (controller.collisions.isInteractableNear) {
+            // Should really handle better, Actions perhaps?
+            Door temp = controller.collisions.interactableObject.GetComponent<Door>();
+            temp.GoToNextStage();
         }
     }
 
