@@ -10,6 +10,8 @@ using UnityEngine;
  */
 public class Player : MonoBehaviour
 {
+    public bool isEyesObtained = false;
+
     [SerializeField] private Movement2D controller;
 
     [SerializeField] private float moveSpeed = 6.00F;
@@ -98,7 +100,10 @@ public class Player : MonoBehaviour
             Eyes someEyes = controller.collisions.interactableObject.GetComponent<Eyes>();
 
             if (someDoor) someDoor.GoToNextStage();
-            if (someEyes) someEyes.Pickup(this);
+            if (someEyes) {
+                someEyes.Pickup(this);
+                isEyesObtained = true;
+            }
         }
     }
 

@@ -24,10 +24,12 @@ public class TempScriptBecauseBugs : MonoBehaviour
                 // Debug.DrawLine(player.transform.position, mousePos, Color.green);
                 // Debug.DrawRay(player.transform.position, mousePos, Color.blue);
 
-                RaycastHit2D collision = Physics2D.Raycast(currentPos, mousePos - currentPos, 10, obstacleMask);
+                RaycastHit2D collision = Physics2D.Raycast(currentPos, mousePos - currentPos, 6, obstacleMask);
                 if (collision) {
                     if (collision.transform.gameObject.GetComponent<DisappearOnSight>()) {
-                        collision.transform.gameObject.GetComponent<DisappearOnSight>().Disappear();
+                        if (player.isEyesObtained) {
+                            collision.transform.gameObject.GetComponent<DisappearOnSight>().Disappear();
+                        }
                     }
                 }
 
