@@ -10,6 +10,8 @@ using UnityEngine;
  */
 public class Player : MonoBehaviour
 {
+    public bool isEyesObtained = false;
+
     [SerializeField] private Movement2D controller;
 
     [SerializeField] private float moveSpeed = 6.00F;
@@ -40,12 +42,27 @@ public class Player : MonoBehaviour
         controller.Move(velocity * Time.deltaTime, userInput);
 
         if (controller.collisions.isAbove || controller.collisions.isBelow) {
+            // Spikes
+            if (controller.collisions.isHazard) {
+                OnDeath();
+            }
+
+            // Slope
             if (controller.collisions.isSliding) {
                 velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
             } else {
                 velocity.y = 0;
             }
         }
+    }
+
+    void LateUpdate() {
+        UpdateFOV();
+    }
+
+    public void OnDeath() {
+        // For now leave it as reset position
+        transform.position = Vector3.zero;
     }
 
     public void SetUserInput(Vector2 input) {
@@ -75,6 +92,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Interact() {
+        if (controller.collisions.isInteractableNear) {
+            // NEED A BETTER WAY TO DO THIS
+
+            Door someDoor = controller.collisions.interactableObject.GetComponent<Door>();
+            Eyes someEyes = controller.collisions.interactableObject.GetComponent<Eyes>();
+
+            if (someDoor) someDoor.GoToNextStage();
+            if (someEyes) {
+                someEyes.Pickup(this);
+                isEyesObtained = true;
+            }
+        }
+    }
+
     private void CalculateVelocity() {
         float targetVelocity = userInput.x * moveSpeed;
 
@@ -86,5 +118,29 @@ public class Player : MonoBehaviour
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+    }
+
+    /**
+     * NB: Since this is buggy current code is using personal cast from
+     *     local position to mouse position (global space). Keep this in
+     *     mind when refactoring.
+     */
+    private void UpdateFOV() {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        // Fix direction since main camera is negative set.
+        mousePos.z = 0;
+
+        // Debug.DrawLine(transform.position, mousePos, Color.magenta);
+        
+        // Vector3 mouseDirection = mousePos;
+        // Vector3 mouseNormal = Vector3.Cross(mouseDirection, Vector3.back);
+        // Vector3 lookDirection = Vector3.Cross(mouseDirection, mouseNormal);
+
+        // Debug.DrawRay(transform.position, mouseDirection, Color.red);
+        // Debug.DrawRay(transform.position, mouseNormal, Color.green);
+        // Debug.DrawRay(transform.position, lookDirection, Color.blue);
+
+        // transform.LookAt(lookDirection.normalized * 100);
     }
 }
