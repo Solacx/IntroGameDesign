@@ -13,6 +13,10 @@ public class MenuController : MonoBehaviour
     public void LoadStage(int stageNumber) {
         SceneManager.LoadSceneAsync(stagesFolder + stageNumber);
     }
+
+    public void Exit() {
+        Application.Quit();
+    }
     
     public void ShowMainMenu() {
         DeactivateMenus();
