@@ -11,6 +11,7 @@ using UnityEngine;
 public class Movement2D : RaycastController
 {
     public CollisionData collisions;
+	public Animator animator;
 
     [HideInInspector] public Vector2 userInput;
 
@@ -32,6 +33,7 @@ public class Movement2D : RaycastController
         collisions.Reset();
         collisions.moveAmountOld = moveAmount;
         userInput = input;
+		//animator.SetFloat("Speed", Mathf.Abs(moveAmount));
 
         if (moveAmount.y < 0) {
             moveAmount = DescendSlope(moveAmount);
