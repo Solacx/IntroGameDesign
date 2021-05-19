@@ -112,15 +112,35 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
+<<<<<<< HEAD
   - first: {x: 3, y: -5, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 19
       m_TileSpriteIndex: 19
+=======
+  - first: {x: 2, y: -5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 20
+      m_TileSpriteIndex: 20
+>>>>>>> Week5
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
+<<<<<<< HEAD
+=======
+  - first: {x: -1, y: -4, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 19
+      m_TileSpriteIndex: 19
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 1
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 1073741827
+>>>>>>> Week5
   - first: {x: 4, y: -4, z: 0}
     second:
       serializedVersion: 2
@@ -324,11 +344,17 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 4a3acdc1dd852774bbea01b7f502a4c4, type: 2}
   - m_RefCount: 1
+<<<<<<< HEAD
     m_Data: {fileID: 11400000, guid: 8e760c9feb234af45a9176e77f16beb4, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 95cde9f9165c10745a8cb2c5de21c934, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 874d5092efb69994ba2357baf5f69cf0, type: 2}
+=======
+    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: c0f0e1adf8949f6419974030a6a3b900, type: 2}
+>>>>>>> Week5
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 77825ce1c2a1f3f43a729b781f6b5ecd, type: 3}
@@ -369,11 +395,19 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 75bfedf741294474fa8ff82844622912, type: 3}
   - m_RefCount: 1
+<<<<<<< HEAD
     m_Data: {fileID: 21300000, guid: 1dd61287d49f58a4686fe473893117f8, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: dfec8e844a6002f4e9d0c733a5841ca8, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 22
+=======
+    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 91b72971db63cb54fa81be7d6473736d, type: 3}
+  m_TileMatrixArray:
+  - m_RefCount: 21
+>>>>>>> Week5
     m_Data:
       e00: 1
       e01: 0
@@ -392,8 +426,14 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
+<<<<<<< HEAD
   - m_RefCount: 22
+=======
+  - m_RefCount: 20
+>>>>>>> Week5
     m_Data: {r: 1, g: 1, b: 1, a: 1}
+  - m_RefCount: 1
+    m_Data: {r: 0.7535301, g: 0.4337143, b: 0.4409103, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
